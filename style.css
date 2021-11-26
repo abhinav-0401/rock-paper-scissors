@@ -28,7 +28,19 @@ header {
 }
 
 .content .heading {
-    
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    font-size: 25px;
+}
+
+.content .heading span {
+    margin: 15px 15px 10px 15px;
+    padding: 14px;
+    display: inline-block;
+    border-radius: 7px;
+    box-shadow: 0 0 20px 0 #cccccc;
 }
 
 footer {
