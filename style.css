@@ -1,0 +1,42 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    padding: 0;
+    margin: 0;
+    font-family: Ubuntu, "Noto Sans", Helvetica, "Segoe UI", Arial, sans-serif;
+    font-weight: 300;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 auto;
+
+    background-color: #E6E6E6;
+    padding: 20px 40px;
+    font-size: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    gap: 40px;
+}
+
+.content .heading {
+    
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 auto;
+
+    background-color: #E6E6E6;
+    padding: 20px 40px;
+}

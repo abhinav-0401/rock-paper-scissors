@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors!</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Rock, Paper, Scissors!</h1>
-    Results are in the console. If you're using Chrome, press Ctrl+Shift+I.
-    <br>
-    Refresh the page once after it finishes loading for the first time.
+    <header>WELCOME TO THE GAME</header>
+    <!--Buttons for Rock-Paper-Scissors-->
+    <div class="content">
+       <div class="heading">
+           Rock Paper Scissors!
+       </div> 
+       <div class="computer">Computer's choice: <span></span></div>
+        <div class="buttons">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+        </div>
+        <div class="scores"> 
+            <div>Player Score: <span id="player-score"></span> </div> 
+            <div>Computer Score: <span id="computer-score"></span> </div>
+        </div>
+    </div>
+    <footer>
+        Made by Abhinav Jha 
+    </footer>
     <script src="main.js" async></script>
 </body>
 </html>

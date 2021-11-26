@@ -1,4 +1,13 @@
+//Select elements of the web page 
+const computer = document.querySelector(".computer span");
+const scores = Array.from(document.querySelectorAll(".scores span"));
+let playerScore = 0;
+let aiScore = 0;
+let buttonArray = Array.from(document.querySelectorAll(".buttons button"));
+
+//Return the computer's choice (selected randomly)
 const computerPlay = () => {
+    //Select random number between 0 and 2, return a choice
     let randomNum = Math.floor(Math.random() * 3);
 
     switch (randomNum) {
@@ -13,50 +22,68 @@ const computerPlay = () => {
     }
 };
 
-const playRound = (computerSelection = "rock", playerSelection = "rock") => {
+//Play the actual round and return an object containing the result
+const roundLogic = (computerSelection = "rock", playerSelection = "rock") => {
     playerSelection = playerSelection.toLowerCase();
+
+    //This  object contains the result of a single round
     let roundObj = {
-        didWin: 0,
+        points: {
+            ai: 0,
+            player: 0
+        },
         result: "",
         err: false
     }
     
+    //Possibility of a draw
     if (computerSelection === playerSelection) {
         roundObj.result = `Computer chose ${computerSelection}. It's a draw! ${playerSelection} and ${computerSelection}.`;
-        roundObj.didWin = 1;
+        roundObj.points.ai = 0
+        roundObj.points.player = 0;
         return roundObj;
-    } else {
+    } 
+    else {
         switch (playerSelection) {
             case "rock":
                 if (computerSelection === "scissors") {
                     roundObj.result =`Computer chose ${computerSelection}. You win! ${playerSelection} beats ${computerSelection}.`;
-                    roundObj.didWin = 2;
+                    roundObj.points.player = 1;
+                    roundObj.points.ai = 0;
                     return roundObj;
-                } else if (computerSelection === "paper") {
+                } 
+                else if (computerSelection === "paper") {
                     roundObj.result = `Computer chose ${computerSelection}. You lose! ${computerSelection} beats ${playerSelection}.`;
-                    roundObj.didWin = 0;
+                    roundObj.points.player = 0;
+                    roundObj.points.ai = 1;
                     return roundObj;
                 }
                 break;
             case "paper":
                 if (computerSelection === "rock") {
                     roundObj.result = `Computer chose ${computerSelection}. You win! ${playerSelection} beats ${computerSelection}.`;
-                    roundObj.didWin = 2;
+                    roundObj.points.player = 1;
+                    roundObj.points.ai = 0;
                     return roundObj;
-                } else if (computerSelection === "scissors") {
+                } 
+                else if (computerSelection === "scissors") {
                     roundObj.result = `Computer chose ${computerSelection}. You lose! ${computerSelection} beats ${playerSelection}.`;
-                    roundObj.didWin = 0;
+                    roundObj.points.player = 0;
+                    roundObj.points.ai = 1;
                     return roundObj;
                 }
                 break;
             case "scissors":
                 if (computerSelection === "paper") {
                     roundObj.result = `Computer chose ${computerSelection}. You win! ${playerSelection} beats ${computerSelection}.`;
-                    roundObj.didWin = 2;
+                    roundObj.points.player = 1;
+                    roundObj.points.ai = 0;
                     return roundObj;
-                } else if (computerSelection === "rock") {
+                } 
+                else if (computerSelection === "rock") {
                     roundObj.result = `Computer chose ${computerSelection}. You lose! ${computerSelection} beats ${playerSelection}.`;
-                    roundObj.didWin = 0;
+                    roundObj.points.player = 0;
+                    roundObj.points.ai = 1;
                     return roundObj;
                 }
                 break;
@@ -68,25 +95,37 @@ const playRound = (computerSelection = "rock", playerSelection = "rock") => {
     }
 };
 
+//Execute roundLogic function, print results, modify the scores
+const playRound = (e) => {
+    console.log(e.id);
+
+    //Get a random computer choice
+    let aiChoice = computerPlay();
+    let resultObj = roundLogic(aiChoice, e.id);
+    
+    //Modify the scores as per the round result
+    playerScore += resultObj.points.player;
+    aiScore += resultObj.points.ai;
+
+    //Update DOM
+    computer.innerText = aiChoice;
+    scores[0].innerText = playerScore;
+    scores[1].innerText = aiScore;
+
+    //If any scores have reached 5, Alert to refresh
+    if (playerScore >= 5 || aiScore >= 5) {
+        for (let i = 0; i < buttonArray.length; i += 1) {
+            buttonArray[i].addEventListener("click", () => { alert(`Game Over. ${playerScore > aiScore ? "Player" : "Computer"} won. Refresh to play again`); });
+        }
+    }
+};
+
 //let playerSelection = prompt();
 //console.log(playRound(computerPlay(), playerSelection));
 
-const game = () => {
-    console.log("Welcome! This is a five round game of Rock-Paper-Scissors!");
-    let score = 0;
-    console.log(`Your score is ${score}`);
 
-    for (let count = 1; count <= 5; count += 1) {
-        console.log("This is round " + count);
-        
-        const playerSelection = prompt(`Enter your choice for round ${count}`);
-        const computerSelection = computerPlay();
-        
-        let resultObj = playRound(computerPlay(), playerSelection);
-        score += resultObj.didWin;
-        console.log(resultObj.result);
-        console.log("Your score is " + score);
-    }
+//Attach "click" event listeners on all the buttons
+console.log(buttonArray);
+for (let i = 0; i < buttonArray.length; i += 1) {
+    buttonArray[i].addEventListener("click", () => { playRound(buttonArray[i]) });
 }
-
-game();
